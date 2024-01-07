@@ -14,6 +14,12 @@ This repository hosts the code for a chat application that utilizes Spring Boot 
 
 To get started with the application, you need to have Docker and Docker Compose installed on your machine. Once you have these prerequisites, you can clone the repository and use Docker Compose to build and run the application.
 
+## Application Architecture Diagram
+
+![diagram](https://github.com/misterneo/spring-microservices-chat-app/assets/25622326/2f5e8edc-c5bc-4725-8f60-b863818b5d19)
+
+## Running the Application
+
 1. Clone the repository:
 
 ```sh
