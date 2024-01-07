@@ -1,0 +1,109 @@
+version: "3.8"
+services:
+  mysqldb:
+    image: mysql:8.0.32
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=spring_auth_api
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - springboot-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/spring_auth_api
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - springboot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8005/auth/healthy"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+  mongodb:
+    image: mongo
+    restart: always
+    volumes:
+      - ./mongodb-data:/data/db
+    networks:
+      - springboot-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  redisdb:
+    image: redis
+    restart: always
+    networks:
+      - springboot-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+  chat-service:
+    build:
+      context: ./chat-service
+      dockerfile: Dockerfile
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redisdb:
+        condition: service_healthy
+    environment:
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: spring_chat_app
+      SPRING_DATA_MONGODB_HOST: mongodb
+      SPRING_DATA_REDIS_HOST: redisdb
+      SPRING_DATA_REDIS_PORT: 6379
+    networks:
+      - springboot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/messages/healthy"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
+  app:
+    build:
+      context: ./chat-app-client
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - springboot-network
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      chat-service:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+
+volumes:
+  mysql-data:
+  mongodb-data:
+
+networks:
+  springboot-network:
+    name: springboot-network

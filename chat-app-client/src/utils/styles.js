@@ -1,0 +1,52 @@
+export const authStyles = {
+  container: {
+    padding: "0px 25px",
+    borderRadius: "5px",
+    maxWidth: "500px",
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100dvh",
+    justifyContent: "center",
+    fontFamily: "Helvetica",
+  },
+  heading: {
+    marginBottom: "50px",
+  },
+  form: {
+    width: "100%",
+  },
+  input: {
+    padding: "12px",
+    borderRadius: "5px",
+    border: "1px solid rgba(0,0,0,0.1)",
+    marginBottom: "10px",
+    width: "100%",
+    boxSizing: "border-box",
+    fontFamily: "Helvetica",
+    backgroundColor: "#eeeeee7e",
+  },
+  button: {
+    padding: "12px",
+    borderRadius: "5px",
+    border: "none",
+    backgroundColor: "#0077FF",
+    color: "#fff",
+    cursor: "pointer",
+    width: "100%",
+    boxSizing: "border-box",
+    fontFamily: "Helvetica",
+    marginTop: "20px",
+    textTransform: "uppercase",
+  },
+  noAccount: {
+    textAlign: "center",
+    marginTop: "3rem",
+  },
+  noAccountLink: {
+    color: "#0077FF",
+    cursor: "pointer",
+    fontWeight: "bold",
+  },
+};
