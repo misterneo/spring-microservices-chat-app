@@ -10,13 +10,13 @@ This repository hosts the code for a chat application that utilizes Spring Boot 
 
 - `chat-app-client`: A simple web interface for the chat application. It is built using React and uses STOMP Client for real-time communication with the chat service.
 
-## Getting Started
-
-To get started with the application, you need to have Docker and Docker Compose installed on your machine. Once you have these prerequisites, you can clone the repository and use Docker Compose to build and run the application.
-
 ## Application Architecture Diagram
 
 ![diagram](https://github.com/misterneo/spring-microservices-chat-app/assets/25622326/2f5e8edc-c5bc-4725-8f60-b863818b5d19)
+
+## Getting Started
+
+To get started with the application, you need to have Docker and Docker Compose installed on your machine. Once you have these prerequisites, you can clone the repository and use Docker Compose to build and run the application.
 
 ## Running the Application
 
