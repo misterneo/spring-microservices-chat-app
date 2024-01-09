@@ -41,6 +41,18 @@ docker compose up -d
 
 4. Access the application at `http://localhost`
 
+## Stopping the Application
+
+To stop the application, run the following command:
+
+```sh
+docker compose down
+```
+
+## Disclaimer
+
+This project is for demonstration purposes only. It is not intended for production use. If you have any suggestions for improvements, please feel free to open an issue or submit a pull request.
+
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](https://choosealicense.com/licenses/mit/) file for more details.
