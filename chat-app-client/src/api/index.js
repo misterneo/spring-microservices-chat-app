@@ -10,7 +10,8 @@ const api = Axios.create({
 
 api.interceptors.request.use(async (config) => {
   const token = localStorage.getItem("token");
-  if (token) {
+  const needsToken = !config.url.includes("/auth");
+  if (token && needsToken) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

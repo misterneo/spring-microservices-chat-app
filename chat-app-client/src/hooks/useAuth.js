@@ -1,7 +1,5 @@
 import { useState } from "react";
 import api from "../api";
-import axios from "axios";
-import { API_URL } from "../utils/constants";
 
 export const useAuth = (currentUser, setCurrentUser) => {
   const [register, setRegister] = useState(false);
@@ -31,13 +29,13 @@ export const useAuth = (currentUser, setCurrentUser) => {
       setLoading(true);
       let response;
       if (register) {
-        response = await axios.post(`${API_URL}/auth/signup`, {
+        response = await api.post("/auth/signup", {
           fullName: username,
           email: newEmail,
           password,
         });
       } else {
-        response = await axios.post(`${API_URL}/auth/login`, {
+        response = await api.post("/auth/login", {
           email: newEmail,
           password,
         });
